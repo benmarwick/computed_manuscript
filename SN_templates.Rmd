@@ -21,10 +21,7 @@ output:
 ---
 
 ```{r load-libraries, message=FALSE, include=FALSE}
-library(dplyr)
-library(magrittr)
-library(ggplot2)
-library(stringr)
+library(tidyverse)
 library(bookdown)
 ```
 
