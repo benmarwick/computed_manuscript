@@ -96,7 +96,7 @@ As Rmarkdown documents can do anything R can do, we can also create and include 
 final_data %>% 
   ggplot(aes(x = class, y = wt, color = class)) +
   geom_boxplot() +
-  geom_jitter(width = 0.25) + 
+  ggbeeswarm::geom_quasirandom(width = 0.25) + 
   xlab("") +
   ylab("Weight") + 
   theme_minimal() +
