@@ -57,14 +57,14 @@ knitr::kable(tmp, format = 'latex', booktabs = TRUE,
              caption = "Original subject data")
 ```
 
-Rather than analyzing those data and then copying them into our manuscript, we can use the programming language `R` to do that in the manuscript itself. Simply enclose the code inside backticks: `` `r
+Rather than analyzing those data and then copying the results into our manuscript, we can use the programming language `R` to do that in the manuscript itself. Simply enclose the code inside backticks: `` `r
 <code to evaluate>` ``. For instance, to calculate the circumference and area of a circle with radius _r_ = 10, you could write "A = `` `r
 pi * r^2` ``" and  "C = `` `r
 2 * pi * r` ``. Those give A = `r r = 10; round(pi * r^2, 3)` and C = `r r = 10; round(2 * pi * r, 3)`. 
 
 We have **`r nrow(df)`** subjects in our study (Table \@ref(tab:subject-weights)). The average weight is **`r round(mean(df$wt), 2)`** (range: **`r min(df$wt)`**-**`r max(df$wt)`**). We have **`r df %>% filter(class == 'Group 1') %>% nrow()`** subjects in Group 1, **`r df %>% filter(class == 'Group 2') %>% nrow()`** subjects in Group 2, and **`r df %>% filter(class == 'Group 3') %>% nrow()`** in Group 3. (The numbers in **bold face type** are computed values.)
 
-Now suppose we get another tranche of data:
+Now suppose we get another tranche of data in the form of a second CSV file:
 
 ```{r new-data, echo=FALSE}
 # read in some more data
