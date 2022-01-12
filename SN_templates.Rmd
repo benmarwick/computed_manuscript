@@ -20,7 +20,15 @@ output:
     extra_dependencies: ["booktabs"]
 ---
 
-```{r load-libraries, message=FALSE, include=FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      echo = FALSE)
+
+```
+
+
+```{r load-libraries, include=FALSE}
 library(tidyverse)
 library(bookdown)
 ```
@@ -43,7 +51,7 @@ One 'killer feature' of computed manuscripts is the ability to compute and inser
 
 For instance, imagine we are analyzing data from a clinical trial. We have grouped subjects in three bins and measured their weights. 
 
-```{r subject-weights, echo=FALSE}
+```{r subject-weights}
 # read in some example data
 df <- read_csv("example-data-1.csv")
 
@@ -66,7 +74,7 @@ We have **`r nrow(df)`** subjects in our study (Table \@ref(tab:subject-weights)
 
 Now suppose we get another tranche of data in the form of a second CSV file:
 
-```{r new-data, echo=FALSE}
+```{r new-data}
 # read in some more data
 df2 <- read_csv("example-data-2.csv")
 
@@ -82,7 +90,7 @@ knitr::kable(tmp, format = 'latex', booktabs = TRUE,
 
 There are **`r nrow(df2)`** subjects in this new dataset (Table \@ref(tab:new-data)). Their average weight is **`r round(mean(df2$wt), 2)`** (range: **`r min(df2$wt)`**-**`r max(df2$wt)`**). 
 
-```{r combine-tables, echo=FALSE}
+```{r combine-tables}
 final_data <- rbind(df, df2)
 ```
 
@@ -92,7 +100,7 @@ Combining the two datasets, we have a total of **`r nrow(final_data)`** subjects
 
 As Rmarkdown documents can do anything R can do, we can also create and include figures. Here we plot boxplots of our clinical trial data. The data are shown in Figure \@ref(fig:plot-data). Note that this figure number (as well as the table numbers above) are automatically generated. 
 
-```{r plot-data, echo=FALSE, fig.cap="Weight distribution of clinical trial subjects", fig.height=3, fig.width=4}
+```{r plot-data, fig.cap="Weight distribution of clinical trial subjects", fig.height=3, fig.width=4}
 final_data %>% 
   ggplot(aes(x = class, y = wt, color = class)) +
   geom_boxplot() +
@@ -108,12 +116,12 @@ final_data %>%
 
 The following code was used in section \ref{sec:1} to read in the original clinical trial data from CSV files (these data were simulated):
 
-```{r show-trial-data-1, eval=FALSE, ref.label='subject-weights'}
+```{r show-trial-data-1, echo=TRUE, eval=FALSE, ref.label='subject-weights'}
 ```
 
 The following code was used in section \ref{sec:2} to plot the data:
 
-```{r show-fib-1, eval=FALSE, ref.label='plot-data'}
+```{r show-fib-1, echo=TRUE, eval=FALSE, ref.label='plot-data'}
 ```
 
 # References
