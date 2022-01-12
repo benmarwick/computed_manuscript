@@ -106,7 +106,7 @@ final_data %>%
 
 # Methods{#methods}
 
-The following code was used in section \ref{sec:1} to create the original clinical trial data:
+The following code was used in section \ref{sec:1} to read in the original clinical trial data from CSV files (these data were simulated):
 
 ```{r show-trial-data-1, eval=FALSE, ref.label='subject-weights'}
 ```
