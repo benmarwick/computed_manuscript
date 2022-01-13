@@ -1,5 +1,5 @@
 install.packages(c(
-    "rticles"
+    "rticles",
     "bookdown",
     "ggbeeswarm"))
 
