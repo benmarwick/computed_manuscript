@@ -1,24 +1,23 @@
 ---
-title: My Example Computed Manuscript
+title: "My Example Computed Manuscript"
 subtitle: Created in Rmarkdown
 titlerunning: Example computed manuscript
-
-authors: 
+date: "`r format(Sys.time(), '%d %b %Y %H:%M:%S %Z')`"
+author: "Jeffrey M. Perkel, Technology Editor, Nature"
+output:
+  bookdown::pdf_book:
+    base_format: rticles::springer_article
+    extra_dependencies: booktabs
+header-includes: \usepackage{placeins}
+abstract: "A mock computed manuscript created in RStudio using {Rmarkdown}. The {Bookdown}
+  and {Rticles} packages were used to output the text in Springer Nature's desired
+  manuscript format. \n"
+bibliography: bibliography.bib
+biblio-style: spbasic
+authors:
 - name: Jeffrey M. Perkel
   address: Springer Nature, 1 New York Plaza, New York, NY
   email: jeffrey.perkel@nature.com
-  
-abstract: |
-  A mock computed manuscript created in RStudio using {Rmarkdown}. The {Bookdown} and {Rticles} packages were used to output the text in Springer Nature's desired manuscript format. 
-
-bibliography: bibliography.bib
-biblio-style: spbasic
-# bibstyle options spbasic(default), spphys, spmpsci
-header-includes: \usepackage{placeins}
-output: 
-  bookdown::pdf_book:
-    base_format: rticles::springer_article
-    extra_dependencies: ["booktabs"]
 csl: nature.csl
 ---
 
@@ -39,11 +38,11 @@ library(bookdown)
 
 "Literate programming" is a style of programming that uses computational notebooks to weave together code, explanatory text, data and results into a single document, enhancing scientific communication and computational reproducibility.[@shen2014; @perkel2018a; @perkel2018] (These references were added into the document using RStudio's integration with the open-source Zotero reference manager [@perkel2020] plus the [Better BibTeX](https://retorque.re/zotero-better-bibtex/) Zotero plugin.)
 
-Several platforms for creating such documents exist, including Jupyter, R Markdown and Observable notebooks.[@perkel2021] Typically, these documents interleave code and text 'blocks' to build a computational narrative. But some, including R Markdown and the JupyterBook extension to the Jupyter ecosystem, also allow authors to include and execute code "inline" -- that is, within the text itself.
+Several platforms for creating such documents exist.[@perkel2021] Typically, these documents interleave code and text 'blocks' to build a computational narrative. But some, including R Markdown, Observable, and the JupyterBook extension to the Jupyter ecosystem, also allow authors to include and execute code "inline" -- that is, within the text itself.
 
 This makes it possible to create fully executable manuscripts in which the document itself computes and inserts values and figures into the text rather than requiring authors to input them manually. This is in many ways the 'killer feature' of computed manuscripts: it circumvents the possibility that the author will enter an incorrect number, or forget to update a figure or value should new data arise.
 
-In this manuscript, created in RStudio using the R Markdown language, we will create such an example.
+In this manuscript, created in RStudio using the R Markdown language, we will demonstrate one such example.
 
 # Results {#results}
 
@@ -60,7 +59,7 @@ Rather than analyzing those data and then copying the results into our manuscrip
 pi * r^2` ``" and "C = `` `r
 2 * pi * r` ``. Those evaluate to "A = **`r r = 10; round(pi * r^2, 3)`** and C = **`r r = 10; round(2 * pi * r, 3)`**".
 
-Returning to our dataset, we have **`r nrow(df1)`** (simulated) subjects in our study (see Table \@ref(tab:show-table-1)). The average metabolite concentration is **`r round(mean(df1$conc), 2)`** (range: **`r paste(min(df1$conc), max(df1$conc), sep = ' to ')`**). We have **`r df1 %>% filter(class == 'Group 1') %>% nrow()`** subjects in Group 1, **`r df1 %>% filter(class == 'Group 2') %>% nrow()`** subjects in Group 2, and **`r df1 %>% filter(class == 'Group 3') %>% nrow()`** in Group 3. (The numbers in **bold face type** throughout this document are computed values.)
+Returning to our dataset, we have **`r nrow(df1)`** (simulated) subjects in our study (see Table \@ref(tab:show-table-1); see `R/mock_data.R` for code to generate the mock dataset). The average metabolite concentration is **`r round(mean(df1$conc), 2)`** (range: **`r paste(min(df1$conc), max(df1$conc), sep = ' to ')`**). We have **`r df1 %>% filter(class == 'Group 1') %>% nrow()`** subjects in Group 1, **`r df1 %>% filter(class == 'Group 2') %>% nrow()`** subjects in Group 2, and **`r df1 %>% filter(class == 'Group 3') %>% nrow()`** in Group 3. (The numbers in **bold face type** throughout this document are computed values.)
 
 ```{r new-data}
 # read new dataset
@@ -95,8 +94,6 @@ p <- final_data %>%
 p
 ```
 
-\newpage 
-
 # Code {#code}
 
 The following code was used to load, merge, and plot the (simulated) clinical trial data:
@@ -116,8 +113,6 @@ The following code was used to load, merge, and plot the (simulated) clinical tr
 ```{r show-code-5, echo=TRUE, eval=FALSE, ref.label='plot-data'}
 ```
 
-\newpage
-
 ```{r show-table-1}
 tmp <- cbind(df1[1:33,], rep('|', 33), 
              df1[34:66,], rep('|', 33), 
@@ -125,10 +120,9 @@ tmp <- cbind(df1[1:33,], rep('|', 33),
 names(tmp) <- c('ID', 'Class', 'Conc', '|', 'ID', 'Class', 'Conc', 
                 '|', 'ID', 'Class', 'Conc')
 
-knitr::kable(tmp, format = 'latex', booktabs = TRUE, 
+knitr::kable(tmp, booktabs = TRUE, 
              caption = "Initial subject data")
 ```
-
 
 ```{r show-table-2}
 tmp <- cbind(df2[1:20,], rep('|', 20), 
@@ -137,14 +131,14 @@ tmp <- cbind(df2[1:20,], rep('|', 20),
 names(tmp) <- c('ID', 'Class', 'Conc', '|', 'ID', 'Class', 'Conc', 
                 '|', 'ID', 'Class', 'Conc')
 
-knitr::kable(tmp, format = 'latex', booktabs = TRUE, 
+knitr::kable(tmp, booktabs = TRUE, 
              caption = "New subject data")
 ```
 
 
 \newpage
  
-\FloatBarrier  
+\FloatBarrier 
 
 # Colophon
 
@@ -157,9 +151,9 @@ sessionInfo()
 The current Git commit details are:
 
 ```{r}
-if ("git2r" %in% installed.packages() & git2r::in_repository(path = ".")) git2r::repository(here::here()) 
+# per Marwick, this line only executed if the user has installed {git2r} 
+if ("git2r" %in% installed.packages() & git2r::in_repository(path = '.'))
+  git2r::commits(here::here())[[1]]
 ```
-
-\newpage 
 
 # References
